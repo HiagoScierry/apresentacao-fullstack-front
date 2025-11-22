@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+
+  <style>
+    * {
+      padding: 0;
+      margin: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: #ccc;
+      color: #000;
+
+      width: 100vw;
+      height: 100vh;
+
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    #dados {
+      font-size: 10;
+    }
+  </style>
+
+</head>
+<body>
+  <h1>Minha primeira request</p>
+  <input id="username" type="text">
+  <button id="botao" onclick="dispara()">Enviar</button>
+  <div id="dados">
+  </div>
+
+
+  <script>
+    function dispara(){
+      const username = document.getElementById("username");
+      const botao = document.getElementById("botao");
+      const dados = document.getElementById("dados");
+
+      fetch(`https://api.github.com/users/${username.value}`)
+        .then((resposta) => {
+          if(resposta.status == 404) {
+            throw new Error("Usuario não encontrado")
+          }
+
+          resposta.json()
+            .then(res => {
+              dados.textContent = res.name
+            })
+        })
+        .catch(err => console.log(err))
+    }
+
+  </script>
+
+</body>
+</html>
